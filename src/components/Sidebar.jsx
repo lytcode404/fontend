@@ -163,7 +163,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 pathname === "/tests" && "text-white"
                               } `}
                             >
-                              Tests
+                              Opportunity Suggestion
                             </Link>
                           </li>
                         </ul>
