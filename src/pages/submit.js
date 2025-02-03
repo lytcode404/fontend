@@ -45,9 +45,13 @@ export default function SubmitPage() {
     };
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/ats", data, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(
+        "https://resume-parser-2a39.onrender.com/ats",
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       console.log(response.data);
       const userId = auth?.currentUser?.uid;
       const userDocRef = doc(db, "users", userId);
