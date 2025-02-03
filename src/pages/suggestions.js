@@ -1,9 +1,40 @@
-import { useState } from "react";
+import { auth, db } from "@/db/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 export default function YouTubeSearch() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [loading2, setLoading2] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const userId = auth?.currentUser?.uid
+        const userDocRef = doc(db, "users", userId);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          console.log(userDocSnap.data());
+          setUserData(userDocSnap.data());
+        } else {
+          setError("User not found");
+        }
+      } catch (err) {
+        setError("Error fetching user details");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+
+
 
   const API_KEY = "AIzaSyDz7gvit1UcwBuYRX7L7iVcfmRdeaNrMZ4"; // Replace with your API key
 
@@ -44,6 +75,12 @@ export default function YouTubeSearch() {
           </button>
         </div>
       </div>
+
+      <ul className="text-black flex flex-wrap gap-4 mt-4">
+        {userData?.missing_data.map((val, index) => (
+          <li className="bg-primary rounded-full p-2 text-white" key={index}>{val}</li>
+        ))}
+      </ul>
 
       {/* Results Grid */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

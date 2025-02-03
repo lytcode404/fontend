@@ -166,6 +166,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               Opportunity Suggestion
                             </Link>
                           </li>
+                          <li>
+                            <Link
+                              href="/resume"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/tests" && "text-white"
+                              } `}
+                            >
+                              Check Resume
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
