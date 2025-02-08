@@ -76,7 +76,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             alt="Logo"
           /> */}
           <span className="self-center text-4xl font-semibold whitespace-nowrap dark::text-white text-primary">
-            Nextgen Navigator
+            Nextgen
           </span>
         </Link>
 
@@ -160,7 +160,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             <Link
                               href="/suggestions"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/tests" && "text-white"
+                                pathname === "/suggestions" && "text-white"
                               } `}
                             >
                               Opportunity Suggestion
@@ -170,7 +170,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             <Link
                               href="/resume"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/tests" && "text-white"
+                                pathname === "/resume" && "text-white"
                               } `}
                             >
                               Check Resume
