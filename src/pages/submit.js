@@ -12,11 +12,9 @@ export default function SubmitPage() {
 
   useEffect(() => {
     if (router.query.data) {
-      // Decode the URL-encoded data from the query string
       const decodedData = decodeURIComponent(router.query.data);
 
       try {
-        // Parse the decoded string into a JSON object
         const parsedData = JSON.parse(decodedData);
         setResumeData(parsedData); // Set the resume data in the state
       } catch (error) {
