@@ -158,14 +158,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
-                              href="/suggestions"
+                              href="https://curette-your-resume.onrender.com/"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/suggestions" && "text-white"
+                                pathname === "/resume2" && "text-white"
                               } `}
                             >
-                              Opportunity Suggestion
+                              Curette Resume
                             </Link>
                           </li>
+
                           <li>
                             <Link
                               href="/resume"
@@ -174,6 +175,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               } `}
                             >
                               Check Resume
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="/suggestions"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/suggestions" && "text-white"
+                              } `}
+                            >
+                              Opportunity Suggestion
                             </Link>
                           </li>
                         </ul>
