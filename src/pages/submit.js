@@ -16,8 +16,9 @@ export default function SubmitPage() {
 
       try {
         const parsedData = JSON.parse(decodedData);
-        setResumeData(parsedData); // Set the resume data in the state
-      } catch (error) {
+        // console.log(parsedData)
+        setResumeData(parsedData)
+       } catch (error) {
         console.error("Error parsing resume data from URL:", error);
       }
     }
@@ -34,7 +35,7 @@ export default function SubmitPage() {
       alert("Please enter a job description.");
       return;
     }
-
+    console.log("first")
     console.log(resumeData);
 
     const data = {
@@ -44,8 +45,8 @@ export default function SubmitPage() {
 
     try {
       const response = await axios.post(
-        // "http://127.0.0.1:8000/ats",
-        "https://resume-parser-2a39.onrender.com/ats",
+        "http://127.0.0.1:8000/ats",
+        // "https://resume-parser-2a39.onrender.com/ats",
         data,
         {
           headers: { "Content-Type": "application/json" },
@@ -56,8 +57,13 @@ export default function SubmitPage() {
       const userDocRef = doc(db, "users", userId);
       await updateDoc(userDocRef, {
         ats_score: response.data.ats_score,
-        missing_data: response?.data?.missing_skills,
+        missing_skills:
+          response?.data?.missing_skills?.reduce((acc, skill) => {
+            acc[skill] = false;
+            return acc;
+          }, {}) || {},
       });
+
       // Check if ATS score is part of the response
       if (response.data.ats_score) {
         console.log(response.data);

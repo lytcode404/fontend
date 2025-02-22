@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import CardDataStats from "@/Utils/CardDataStats";
@@ -8,11 +8,23 @@ import ChartThree from "@/Utils/Charts/ChartThree";
 import TableOne from "@/Utils/Tables/TableOne";
 import ChatCard from "@/Utils/Chat/ChatCard";
 import ChartFour from "@/Utils/Charts/ChartFour";
+import { fetchAllJobs, fetchUserData } from "@/hooks/jobs";
 const MapOne = dynamic(() => import("@/Utils/Maps/MapOne"), {
   ssr: false,
 });
 
 const ECommerce = () => {
+  const [jobsData, setJobsData] = useState([]);
+
+  useEffect(() => {
+    async function fetchJobs() {
+      const resp = await fetchUserData();
+      console.log(resp);
+      setJobsData(resp);
+    }
+    fetchJobs();
+  }, []);
+
   return (
     <>
       <Head>

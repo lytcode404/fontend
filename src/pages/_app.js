@@ -36,7 +36,9 @@ export default function App({ Component, pageProps }) {
   }
 
   if (
-    (router.pathname === "/exam/[slug]")   ) {
+    router.pathname === "/exam/[slug]" ||
+    router.pathname === "/tests/[test]"
+  ) {
     return <Component {...pageProps} />;
   }
   return (

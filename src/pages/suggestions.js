@@ -1,5 +1,6 @@
 import { auth, db } from "@/db/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function YouTubeSearch() {
@@ -13,7 +14,7 @@ export default function YouTubeSearch() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const userId = auth?.currentUser?.uid
+        const userId = auth?.currentUser?.uid;
         const userDocRef = doc(db, "users", userId);
         const userDocSnap = await getDoc(userDocRef);
 
@@ -34,9 +35,14 @@ export default function YouTubeSearch() {
     fetchUserDetails();
   }, []);
 
+  const router = useRouter();
+  const { skill } = router.query;
 
+  useEffect(() => {
+    setQuery(skill);
+  }, []);
 
-  const API_KEY = "AIzaSyDz7gvit1UcwBuYRX7L7iVcfmRdeaNrMZ4"; // Replace with your API key
+  const API_KEY = "AIzaSyC46GhGiHSuo7PnjsqTVVLPI7LARczBI-E"; // Replace with your API key
 
   const handleSearch = async () => {
     if (!query) return;
@@ -77,9 +83,12 @@ export default function YouTubeSearch() {
       </div>
 
       <ul className="text-black flex flex-wrap gap-4 mt-4">
-        {userData?.missing_data.map((val, index) => (
-          <li className="bg-primary rounded-full p-2 text-white" key={index}>{val}</li>
-        ))}
+        {userData?.missing_skills.length > 0 &&
+          userData?.missing_skills?.map((val, index) => (
+            <li className="bg-primary rounded-full p-2 text-white" key={index}>
+              {val}
+            </li>
+          ))}
       </ul>
 
       {/* Results Grid */}

@@ -12,17 +12,45 @@ import CalendarSvg from "@/svgs/CalendarSvg";
 import ChartSvg from "@/svgs/ChartSvg";
 import SettingsSvg from "@/svgs/SettingsSvg";
 import TablesSvg from "@/svgs/TablesSvg";
-import { auth } from "@/db/firebase";
+import { auth, db } from "@/db/firebase";
+import { Unlock } from "lucide-react";
+import { doc, getDoc } from "firebase/firestore";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const pathname = usePathname();
   const trigger = useRef(null);
   const sidebar = useRef(null);
+  const [userData, setUserData] = useState([]);
+  const [lockedFeature, setLockedFeature] = useState(true);
+
 
   let storedSidebarExpanded = "true";
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const userId = auth?.currentUser?.uid;
+        const userDocRef = doc(db, "users", userId);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          console.log(userDocSnap.data());
+          setUserData(userDocSnap.data());
+        } else {
+          console.log("User not found");
+        }
+      } catch (err) {
+         console.log("Error fetching user details");
+        console.error(err);
+      } finally {
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   // close on click outside
   useEffect(() => {
@@ -67,7 +95,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+      <div className="flex items-center justify-between gap-2 px-6 py-0.5 lg:py-0.5">
         <Link href="/">
           {/* <Image
             width={176}
@@ -75,8 +103,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             src={"/images/logo/logo.svg"}
             alt="Logo"
           /> */}
-          <span className="self-center text-4xl font-semibold whitespace-nowrap dark::text-white text-primary">
-            Nextgen
+          <span className="self-center text-3xl font-semibold whitespace-nowrap dark::text-white text-primary pt-8">
+            Career Catalyst
           </span>
         </Link>
 
@@ -132,7 +160,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
-                          !open && "hidden"
+                          open && "hidden"
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
@@ -148,22 +176,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
-                              href="/tests"
+                              href="/jobs"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/tests" && "text-white"
+                                pathname === "/jobs" && "text-white"
                               } `}
                             >
-                              Tests
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="https://curette-your-resume.onrender.com/"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/resume2" && "text-white"
-                              } `}
-                            >
-                              Curette Resume
+                              Apply Jobs
                             </Link>
                           </li>
 
@@ -179,12 +197,40 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
+                              href="/tests"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/tests" && "text-white"
+                              } `}
+                            >
+                              Tests
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
                               href="/suggestions"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                 pathname === "/suggestions" && "text-white"
                               } `}
                             >
                               Opportunity Suggestion
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="https://curette-your-resume.onrender.com/"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/resume2" && "text-white"
+                              }`}
+                            >
+                              Curette Resume
+                              {pathname === "/resume2" ? (
+                                <Lock size={18} className="text-white" />
+                              ) : (
+                                <Unlock
+                                  size={18}
+                                  className="text-gray-500 group-hover:text-white"
+                                />
+                              )}
                             </Link>
                           </li>
                         </ul>
@@ -197,7 +243,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Dashboard --> */}
 
               {/* <!-- Menu Item Calendar --> */}
-              <li>
+              {/* <li>
                 <Link
                   href="/calendar"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -208,7 +254,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   <CalendarSvg />
                   Calendar
                 </Link>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Calendar --> */}
 
               {/* <!-- Menu Item Profile --> */}
@@ -224,7 +270,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 </Link>
               </li>
 
-              <li>
+              {/* <li>
                 <Link
                   href="/tables"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -234,7 +280,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   <TablesSvg />
                   Tables
                 </Link>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Tables --> */}
 
               {/* <!-- Menu Item Settings --> */}
@@ -262,7 +308,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Chart --> */}
-              <li>
+              {/* <li>
                 <Link
                   href="/chart"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -272,7 +318,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   <ChartSvg />
                   Chart
                 </Link>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Chart --> */}
 
               {/* <!-- Menu Item Auth Pages --> */}
@@ -304,7 +350,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
-                          !open && "hidden"
+                          open && "hidden"
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
