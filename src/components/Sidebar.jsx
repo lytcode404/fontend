@@ -13,7 +13,7 @@ import ChartSvg from "@/svgs/ChartSvg";
 import SettingsSvg from "@/svgs/SettingsSvg";
 import TablesSvg from "@/svgs/TablesSvg";
 import { auth, db } from "@/db/firebase";
-import { Unlock } from "lucide-react";
+import { Lock, Unlock } from "lucide-react";
 import { doc, getDoc } from "firebase/firestore";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
