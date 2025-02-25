@@ -23,7 +23,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [userData, setUserData] = useState([]);
   const [lockedFeature, setLockedFeature] = useState(true);
 
-
   let storedSidebarExpanded = "true";
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
@@ -43,7 +42,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           console.log("User not found");
         }
       } catch (err) {
-         console.log("Error fetching user details");
+        console.log("Error fetching user details");
         console.error(err);
       } finally {
       }
@@ -104,7 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             alt="Logo"
           /> */}
           <span className="self-center text-3xl font-semibold whitespace-nowrap dark::text-white text-primary pt-8">
-            Career Catalyst
+            Nextgen Navigator
           </span>
         </Link>
 

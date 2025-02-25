@@ -62,7 +62,7 @@ const Login = () => {
           transition={{ duration: 0.8 }}
           className="text-5xl font-bold text-[#38BDF8] text-center"
         >
-          Career Catalyst
+          Nextgen Navigator
         </motion.h1>
         <p className="mt-4 text-lg text-[#CBD5E1] text-center max-w-2xl">
           Unlock custom career opportunities based on your skill assessment. We
@@ -96,8 +96,6 @@ const Login = () => {
 };
 
 export default Login;
-
-
 
 const domains = [
   {

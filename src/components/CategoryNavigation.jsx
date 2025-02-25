@@ -17,7 +17,7 @@ const CategoryNavigation = ({ activeTab, setActiveTab }) => {
             <div className="flex">
               <Link href="#" className="flex items-center mr-10">
                 <span className="self-center text-xl font-semibold whitespace-nowrap dark::text-white">
-                  Career Catalyst
+                  Nextgen Navigator
                 </span>
               </Link>
               <div

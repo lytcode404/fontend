@@ -28,7 +28,7 @@ const ECommerce = () => {
   return (
     <>
       <Head>
-        <title>Analytics | Career Catalyst</title>
+        <title>Analytics | Nextgen Navigator</title>
         <meta
           name="description"
           content="This is Home page Nextgen Navigator"
