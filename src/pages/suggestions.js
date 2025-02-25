@@ -83,7 +83,7 @@ export default function YouTubeSearch() {
       </div>
 
       <ul className="text-black flex flex-wrap gap-4 mt-4">
-        {userData?.missing_skills.length > 0 &&
+        {userData?.missing_skills?.length > 0 &&
           userData?.missing_skills?.map((val, index) => (
             <li className="bg-primary rounded-full p-2 text-white" key={index}>
               {val}
