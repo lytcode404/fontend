@@ -8,75 +8,35 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const Evaluation = () => {
-  const [documentData, setDocumentData] = useState([]);
   const [totalMarks, setTotalMarks] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [slug, setSlug] = useState("");
   const router = useRouter();
-  const { selectedOptions, slug } = router.query;
-
-  let parsedSelectedOptions = {};
-
-  try {
-    if (selectedOptions) {
-      parsedSelectedOptions = JSON.parse(selectedOptions);
-    }
-  } catch (error) {
-    console.error("Error parsing selectedOptions:", error);
-  }
-
-  // useEffect(() => {
-  //   const handleBeforePopState = ({ as }) => {
-  //     if (as !== router.asPath) {
-  //       // Navigating back, so we want to prevent it and navigate to the home page
-  //       router.replace('/'); // Use router.replace to change the URL without adding to history
-  //       return false; // Cancel the pop state
-  //     }
-  //     return true; // Allow the pop state
-  //   };
-
-  //   router.beforePopState(handleBeforePopState);
-
-  //   return () => {
-  //     // Remove the listener when the component unmounts
-  //     router.beforePopState(() => {});
-  //   };
-  // }, [router]);
 
   useEffect(() => {
-    const fetchDocument = async (slug) => {
-      const documentRef = doc(db, "available-tests", slug);
-      const documentSnapshot = await getDoc(documentRef);
+    if (router.isReady) {
+      const { selectedOption, tMarks, slug } = router.query;
+      console.log(selectedOption, Object.keys(selectedOption).length, tMarks, slug)
 
-      if (documentSnapshot.exists()) {
-        const data = documentSnapshot.data().test;
-        // console.log(data[0])
-        setDocumentData(data);
-      } else {
-        console.log("Document not found");
-      }
-    };
-    if (slug) {
-      fetchDocument(slug);
-    }
-  }, [slug]);
-
-  useEffect(() => {
-    let tMarks = 0;
-    console.log(parsedSelectedOptions, documentData);
-    if (parsedSelectedOptions && documentData && documentData.length > 0) {
-      Object.keys(parsedSelectedOptions).forEach((selected) => {
-        const answer = documentData[parseInt(selected)].answer;
-        if (answer && answer === parsedSelectedOptions[selected]) {
-          tMarks += 1;
+      if (selectedOption) {
+        try {
+          setSelectedOptions(JSON.parse(selectedOption));
+        } catch (error) {
+          console.error("Error parsing selected options:", error);
         }
-      });
-      setTotalMarks(tMarks);
+      }
+
+      if (tMarks) setTotalMarks(Number(tMarks));
+      if (slug) setSlug(slug);
     }
-  }, [totalMarks, parsedSelectedOptions, documentData]);
+  }, [router.isReady, router.query]);
+
 
   return (
     <>
+      <h1 className="text- text-3xl capitalize font-bold">Test: {slug}</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total Quesitions" total="5" r levelUp>
+        <CardDataStats title="Total Quesitions" total="20" r levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -95,7 +55,12 @@ const Evaluation = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Attempted" total="5" rate="84.35%" levelUp>
+        <CardDataStats
+          title="Attempted"
+          total={Object.keys(selectedOptions).length}
+          rate="84.35%"
+          levelUp
+        >
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -118,7 +83,7 @@ const Evaluation = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Correct" total="1" rate="2.59%" levelUp>
+        <CardDataStats title="Time Taken" total={3.37} rate="2.59%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -139,7 +104,7 @@ const Evaluation = () => {
         </CardDataStats>
         <CardDataStats
           title="Total Marks"
-          total={totalMarks && totalMarks * 4}
+          total={totalMarks && totalMarks}
           rate="0.95%"
           levelDown
         >

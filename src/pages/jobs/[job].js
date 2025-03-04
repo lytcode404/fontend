@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import axios from "axios";
+import { Lock, Unlock } from "lucide-react";
 
 const Button = ({ children, onClick, type = "button" }) => (
   <button
@@ -55,6 +56,8 @@ const JobDetails = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [effectiveMissingSkills, setEffectiveMissingSkills] = useState([]);
+  const [attemptedTests, setAttemptedTests] = useState([]);
 
   useEffect(() => {
     const userId = auth?.currentUser?.uid;
@@ -62,15 +65,23 @@ const JobDetails = () => {
 
     const userDocRef = doc(db, "users", userId);
 
-    // Real-time listener for Firestore updates
     const unsubscribe = onSnapshot(
       userDocRef,
       (userDocSnap) => {
         if (userDocSnap.exists()) {
-          console.log("Live User Data:", userDocSnap.data());
-          setUserData(userDocSnap.data());
+          const userData = userDocSnap.data();
+          console.log("Live User Data:", userData);
+
+          // Extract tests array safely
+          if (userData.tests) {
+            console.log(userData.tests);
+            setAttemptedTests(userData.tests);
+          } else {
+            setAttemptedTests([]); // No tests found
+          }
         } else {
-          console.log("User not found");
+          console.log("User document not found");
+          setAttemptedTests([]);
         }
       },
       (err) => {
@@ -78,7 +89,7 @@ const JobDetails = () => {
       }
     );
 
-    // Cleanup the listener when component unmounts
+    // Cleanup listener on component unmount
     return () => unsubscribe();
   }, []);
 
@@ -96,6 +107,18 @@ const JobDetails = () => {
       fetchJob();
     }
   }, [jobId]);
+
+
+  useEffect(() => {
+    if (!missingSkills || !attemptedTests) return; // Ensure data exists before processing
+
+    const filteredSkills = missingSkills.filter((skill) => {
+      const userTest = attemptedTests.find((test) => test.slug === skill);
+      return !(userTest?.isPass === "Pass"); // Keep only skills the user hasn't passed
+    });
+
+    setEffectiveMissingSkills(filteredSkills); // Update state
+  }, [missingSkills, attemptedTests]); // Runs when missingSkills or attemptedTests change
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -121,8 +144,8 @@ const JobDetails = () => {
     try {
       console.log("Uploading resume for parsing...");
       const response = await axios.post(
-        // "https://resume-parser-2a39.onrender.com/process",
-        "http://127.0.0.1:8000/process",
+        "https://resume-parser-2a39.onrender.com/process",
+        // "http://127.0.0.1:8000/process",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -160,8 +183,8 @@ const JobDetails = () => {
     try {
       console.log("Calculating ATS Score...");
       const response = await axios.post(
-        // "https://resume-parser-2a39.onrender.com/ats",
-        "http://127.0.0.1:8000/ats",
+        "https://resume-parser-2a39.onrender.com/ats",
+        // "http://127.0.0.1:8000/ats",
         requestData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -324,15 +347,6 @@ const JobDetails = () => {
             required
           />
         </div>
-        <div>
-          <Label>Cover Letter</Label>
-          <Input
-            type="file"
-            accept=".pdf,.doc,.docx"
-            onChange={onCoverLetterChange}
-            required
-          />
-        </div>
 
         <button
           onClick={handleCheckResume}
@@ -379,31 +393,60 @@ const JobDetails = () => {
               Recommended skills you should practice before applying
             </h3>
             <ul className="mt-2">
-              {missingSkills.map((skill) => (
-                <li
-                  key={skill}
-                  className={`p-2 rounded-md flex items-center justify-between `}
-                >
-                  <span>{skill}</span>
+              {missingSkills.map((skill) => {
+                // Find if the user has passed this skill
+                const userTest = attemptedTests?.find(
+                  (test) => test?.slug === skill
+                );
+                const isPassed = userTest?.isPass === "Pass";
 
-                  <div className="flex gap-2">
-                    <button
-                      className="bg-meta-3 hover:bg-success text-white px-3 py-1 rounded-md text-sm"
-                      onClick={() => handleLearn(skill)}
-                    >
-                      Learn
-                    </button>
-                    <button
-                      className="bg-meta-5 hover:bg-secondary text-white px-3 py-1 rounded-md text-sm"
-                      onClick={() => handleTest(skill)}
-                    >
-                      Test
-                    </button>
-                  </div>
-                </li>
-              ))}
+                return (
+                  <li
+                    key={skill}
+                    className="p-2 rounded-md flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-2">
+                      {isPassed ? "✅" : "❌"}
+                      <span>{skill}</span>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        className="bg-meta-3 hover:bg-success text-white px-3 py-1 rounded-md text-sm"
+                        onClick={() => handleLearn(skill)}
+                      >
+                        Learn
+                      </button>
+                      <button
+                        className={`px-3 py-1 rounded-md text-sm text-white ${
+                          isPassed
+                            ? "bg-success hover:bg-meta-3"
+                            : "bg-meta-5 hover:bg-secondary"
+                        }`}
+                        onClick={() => handleTest(skill)}
+                      >
+                        {isPassed ? "Retest" : "Test"}
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </div>
+        )}
+
+        {atsScore && (
+          <button className="p-4 mt-3 rounded-lg text-white capitalize text-center flex gap-2 bg-primary hover:bg-secondary">
+            Curette Resume
+            {effectiveMissingSkills.length > 5 ? (
+              <Lock size={18} className="text-white" />
+            ) : (
+              <Unlock
+                size={18}
+                className="text-gray-500 group-hover:text-white"
+              />
+            )}
+          </button>
         )}
       </div>
 

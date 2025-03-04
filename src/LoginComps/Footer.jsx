@@ -52,7 +52,7 @@ export const Footer6 = () => {
                         </svg>
                       </div>
                     </span>
-                    <span> Nextgen Navigator</span>
+                    <span> Next Navigator</span>
                   </Link>
                 </div>
                 <p className="text-gray-500 sm:pr-8 mb-6">

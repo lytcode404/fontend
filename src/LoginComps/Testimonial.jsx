@@ -14,11 +14,11 @@ export const Testimonial5 = () => {
             <div className="flex flex-col bg-white rounded-xl dark::bg-slate-900">
               <div className="flex-auto p-4 md:p-6">
                 <p className="text-base italic md:text-lg text-gray-800 dark::text-gray-200">
-                  Working with Nextgen Navigator has been a game-changer for my
+                  Working with Next Navigator has been a game-changer for my
                   small business. Their team is incredibly knowledgeable and
                   always available to answer my questions. I highly recommend
-                  Nextgen Navigator to any small business owner who wants to
-                  take their financial management to the next leve
+                  Next Navigator to any small business owner who wants to take
+                  their financial management to the next leve
                 </p>
               </div>
               <div className="p-4 bg-gray-100 rounded-b-xl md:px-7 dark::bg-slate-700">

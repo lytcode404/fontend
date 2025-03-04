@@ -15,9 +15,12 @@ const Test = () => {
   const fetchTestData = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://127.0.0.1:5000/generate-test", {
-        topic: router.query.test,
-      });
+      const response = await axios.post(
+        "https://resume-parser-2a39.onrender.com/generate-test",
+        {
+          topic: router.query.test,
+        }
+      );
 
       // Parse JSON string inside "data"
       const parsedData = JSON.parse(response.data);
@@ -34,12 +37,12 @@ const Test = () => {
   return (
     <div className="">
       <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-bold text-center">Test Questions</h1>
         {!testGenerated && (
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center items-center mt-6 w-[100vw] h-[100vh] gap-4">
+            <h1 className="text-2xl font-bold text-center">Test Questions</h1>
             <button
               onClick={fetchTestData}
-              className="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md flex items-center"
+              className="bg-primary  hover:bg-secondary text-white px-6 py-3 rounded-lg shadow-md transition-all duration-300 flex items-center"
               disabled={loading}
             >
               {loading ? (

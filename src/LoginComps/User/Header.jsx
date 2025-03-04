@@ -30,7 +30,7 @@ const Header = ({ photoUrl, sideNavActive, setSideNavActive }) => {
   return (
     <header className="fixed z-10 w-full container mx-auto py-4 bg-white shadow-md">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark::text-purple-300">
-        <div className="text-xl">Nextgen Navigator</div>
+        <div className="text-xl">Next Navigator</div>
         {/* <!-- Mobile hamburger --> */}
         <button
           className="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"

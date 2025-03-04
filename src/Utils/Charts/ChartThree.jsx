@@ -9,7 +9,7 @@ const options = {
     type: "donut",
   },
   colors: ["#10B981", "#375E83", "#259AE6", "#FFA70B"],
-  labels: ["Python", "AIML", "WEB DEV", "DATA SCIENCE"],
+  labels: ["Python", "ReactJs", "Javascript", "NextJs"],
   legend: {
     show: true,
     position: "bottom",
@@ -142,7 +142,7 @@ const ChartThree = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#6577F3]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> AIML </span>
+              <span> ReactJs </span>
               <span> 75% </span>
             </p>
           </div>
@@ -151,7 +151,7 @@ const ChartThree = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#8FD0EF]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> WEB DEV </span>
+              <span> Javascript </span>
               <span> 90% </span>
             </p>
           </div>
@@ -160,7 +160,7 @@ const ChartThree = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> DATA SCIENCE </span>
+              <span> Nextjs </span>
               <span> 78% </span>
             </p>
           </div>

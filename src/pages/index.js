@@ -28,15 +28,12 @@ const ECommerce = () => {
   return (
     <>
       <Head>
-        <title>Analytics | Nextgen Navigator</title>
-        <meta
-          name="description"
-          content="This is Home page Nextgen Navigator"
-        />
+        <title>Analytics | Next Navigator</title>
+        <meta name="description" content="This is Home page Next Navigator" />
         {/* Add other meta tags as needed (e.g., keywords, author, viewport, etc.) */}
       </Head>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Exams Taken" total="15" rate="0.43%" levelUp>
+        <CardDataStats title="Exams Taken" total="3" rate="43%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -55,12 +52,7 @@ const ECommerce = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats
-          title="Total Certifications Earned"
-          total="9"
-          rate="84.35%"
-          levelUp
-        >
+        <CardDataStats title="Exams Cleared" total="2" rate="84.35%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -85,8 +77,8 @@ const ECommerce = () => {
         </CardDataStats>
         <CardDataStats
           title="Total Quesitions Attempted"
-          total="143"
-          rate="2.59%"
+          total="27"
+          rate="62.59%"
           levelUp
         >
           <svg
@@ -109,9 +101,9 @@ const ECommerce = () => {
         </CardDataStats>
         <CardDataStats
           title="Total Time Spend"
-          total="127 m"
-          rate="0.95%"
-          levelDown
+          total="33.34 m"
+          rate="65%"
+          levelUp
         >
           <svg
             className="fill-primary dark:fill-white"

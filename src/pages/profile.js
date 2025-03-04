@@ -48,7 +48,7 @@ const Profile = () => {
         <title>Profile | Fyndra Online Services</title>
         <meta
           name="description"
-          content="This is Home Blog page for Nextgen Navigator Next.js E-commerce Dashboard Template."
+          content="This is Home Blog page for Next Navigator Next.js E-commerce Dashboard Template."
         />
         {/* Add other meta tags as needed (e.g., keywords, author, viewport, etc.) */}
       </Head>

@@ -103,7 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             alt="Logo"
           /> */}
           <span className="self-center text-3xl font-semibold whitespace-nowrap dark::text-white text-primary pt-8">
-            Nextgen Navigator
+            Next Navigator
           </span>
         </Link>
 

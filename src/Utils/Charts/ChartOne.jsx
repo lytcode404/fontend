@@ -130,11 +130,11 @@ const ChartOne = () => {
         data: [80, 85, 75, 90, 82, 88, 92, 45, 88, 78, 95, 90],
       },
       {
-        name: "AIML",
+        name: "ReactJs",
         data: [75, 70, 80, 68, 92, 85, 78, 84, 90, 85, 92, 88],
       },
       {
-        name: "WEB DEV",
+        name: "Javascript",
         data: [60, 88, 92, 85, 48, 84, 80, 75, 88, 92, 85, 78],
       },
     ],
@@ -174,7 +174,7 @@ const ChartOne = () => {
             </span>
             <div className="w-full">
               <p className="font-semibold text-primary">Python</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="text-sm font-medium">7.03.2025</p>
             </div>
           </div>
           <div className="flex min-w-47.5">
@@ -182,8 +182,8 @@ const ChartOne = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-secondary">AIML</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-secondary">Javascript</p>
+              <p className="text-sm font-medium">7.03.2025</p>
             </div>
           </div>
           <div className="flex min-w-47.5">
@@ -191,8 +191,8 @@ const ChartOne = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-[#804AEE]"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-[#804AEE]">WEB DEV</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-[#804AEE]">ReactJs</p>
+              <p className="text-sm font-medium">7.03.2025</p>
             </div>
           </div>
         </div>

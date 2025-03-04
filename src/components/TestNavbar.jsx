@@ -11,7 +11,11 @@ const TestNavbar = ({
   onPageChange,
   selectedOptions,
   slug,
+  handleSubmitParent,
 }) => {
+  const handleSubmit = () => {
+    handleSubmitParent(); // Calls the parent-provided submit function
+  };
   return (
     <>
       <Head></Head>
@@ -19,9 +23,9 @@ const TestNavbar = ({
         <nav className="w-full flex justify-between px-7 py-2.5 container mx-auto">
           <div className="flex flex-wrap items-center justify-between px-4">
             <Link href="#" className="flex items-center">
-              <span className="selftext-xl font-semibold whitespace-nowrap text-black">
+              <span className="selftext-xl font-semibold whitespace-nowrap text-black capitalize">
                 <Timer />
-                {`Python Basics Test`}
+                {slug}
               </span>
             </Link>
             <div className="flex items-center lg:order-2">
@@ -60,18 +64,12 @@ const TestNavbar = ({
             </div>
           </div>
 
-          <Link
-            href={{
-              pathname: "/Evaluation",
-              query: {
-                selectedOptions: JSON.stringify(selectedOptions),
-                slug: slug,
-              },
-            }}
+          <button
+            onClick={handleSubmit}
             className="bg-primary hover:bg-secondary rounded text-white uppercase px-2 py-1 pt-[8px]"
           >
             submit
-          </Link>
+          </button>
         </nav>
         <div className="lg:hidden">
           <Pagination
@@ -88,7 +86,7 @@ const TestNavbar = ({
 export default TestNavbar;
 
 const Timer = () => {
-  const initialTime = 10*60; // 3 hours in seconds
+  const initialTime = 20*60; // 3 hours in seconds
   const [time, setTime] = useState(initialTime);
 
   useEffect(() => {

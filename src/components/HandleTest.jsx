@@ -28,7 +28,7 @@ export const Question = ({
                 }`}
                 onClick={() => onSelectOption(optionKey)}
               >
-                {optionKey}: {options[optionKey]}
+                {parseInt(optionKey, 10) + 1}: {options[optionKey]}
               </li>
             ))}
       </ul>
