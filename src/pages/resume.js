@@ -24,8 +24,8 @@ export default function ResumeUpload() {
     try {
       setUploadStatus("Uploading...");
       const response = await axios.post(
-        "http://127.0.0.1:8000/process",
-        // "https://resume-parser-2a39.onrender.com/process",
+        // "http://127.0.0.1:8000/process",
+        "https://resume-parser-2a39.onrender.com/process",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
